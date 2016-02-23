@@ -6,4 +6,9 @@ Authors@R: person("Jay", "Hesselberth", email = "jay.hesselberth@gmail.com", rol
 Description: tidytime provides functions for tidying time series data.
 License: GPL
 LazyData: TRUE
-Suggests: testthat
+Suggests:
+    dplyr,
+    tidyr,
+    testthat,
+    zoo
+RoxygenNote: 5.0.1
