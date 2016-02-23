@@ -1,0 +1,9 @@
+Package: tidytime
+Type: Package
+Title: Tidying Functions for Time Series Data
+Version: 0.1.0
+Authors@R: person("Jay", "Hesselberth", email = "jay.hesselberth@gmail.com", role = c("aut", "cre"))
+Description: tidytime provides functions for tidying time series data.
+License: GPL
+LazyData: TRUE
+Suggests: testthat
