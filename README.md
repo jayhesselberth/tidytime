@@ -1,7 +1,13 @@
 tidytime
 ========
 
-Functions for tidying time series objects.
+Functions for tidying time series objects. `tidytime` can tidy `ts`, `xts` and `zoo` objects. The `zoo` tidier is identical to that available in the [broom](https://github.com/dgrtwo/broom/) package, except that it returns a `dplyr::tbl_df`.
+
+All tidied time series have the following columns:
+
+-   `index`: time value from the messy data. Can be `dbl`, `date` or `time`.
+-   `series`: column with a descriptor for the type of messy data.
+-   `value`: values from the original time series.
 
 Install
 -------
@@ -21,6 +27,7 @@ library(tidytime)
 
 ``` r
 sample.ts <- ts(1:10, frequency = 4, start = c(1959, 2))
+
 tidytime(sample.ts)
 #> Source: local data frame [10 x 3]
 #> 
@@ -42,14 +49,9 @@ tidytime(sample.ts)
 
 ``` r
 library(xts)
-#> Loading required package: zoo
-#> 
-#> Attaching package: 'zoo'
-#> The following objects are masked from 'package:base':
-#> 
-#>     as.Date, as.Date.numeric
 data(sample_matrix)
 sample.xts <- as.xts(sample_matrix, descr='my new xts object')
+
 tidytime(sample.xts)
 #> Source: local data frame [720 x 3]
 #> 
@@ -74,14 +76,15 @@ tidytime(sample.xts)
 library(zoo)
 x.Date <- as.Date("2003-02-01") + c(1, 3, 7, 9, 14) - 1
 x <- zoo(rnorm(5), x.Date)
+
 tidytime(x)
 #> Source: local data frame [5 x 3]
 #> 
-#>        index series      value
-#>       (date)  (chr)      (dbl)
-#> 1 2003-02-01      x -0.8231236
-#> 2 2003-02-03      x -0.8535224
-#> 3 2003-02-07      x -0.2895839
-#> 4 2003-02-09      x -1.5311656
-#> 5 2003-02-14      x  0.8370543
+#>        index series       value
+#>       (date)  (chr)       (dbl)
+#> 1 2003-02-01      x -1.30958729
+#> 2 2003-02-03      x -0.18926248
+#> 3 2003-02-07      x -0.39824172
+#> 4 2003-02-09      x -0.05707392
+#> 5 2003-02-14      x -0.87110370
 ```

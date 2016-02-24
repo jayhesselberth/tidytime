@@ -15,7 +15,15 @@ knitr::opts_chunk$set(
 
 # tidytime
 
-Functions for tidying time series objects.
+Functions for tidying time series objects. `tidytime` can tidy `ts`, `xts` and `zoo` objects. The `zoo` tidier is identical to that available in the [broom][1] package, except that it returns a `dplyr::tbl_df`.
+
+[1]: https://github.com/dgrtwo/broom/
+
+All tidied time series have the following columns:
+
+   - `index`: time value from the messy data. Can be `dbl`, `date` or `time`.
+   - `series`: column with a descriptor for the type of messy data.
+   - `value`: values from the original time series.
 
 ## Install
 
@@ -33,15 +41,17 @@ library(tidytime)
 
 ```{r time_series}
 sample.ts <- ts(1:10, frequency = 4, start = c(1959, 2))
+
 tidytime(sample.ts)
 ```
 
 ### `xts` objects
 
-```{r xts}
+```{r xts, message = FALSE}
 library(xts)
 data(sample_matrix)
 sample.xts <- as.xts(sample_matrix, descr='my new xts object')
+
 tidytime(sample.xts)
 ```
 
@@ -51,5 +61,6 @@ tidytime(sample.xts)
 library(zoo)
 x.Date <- as.Date("2003-02-01") + c(1, 3, 7, 9, 14) - 1
 x <- zoo(rnorm(5), x.Date)
+
 tidytime(x)
 ```
