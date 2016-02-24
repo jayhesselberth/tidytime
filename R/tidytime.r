@@ -2,11 +2,9 @@
 #'
 #' tidytime provides functions for tidying time series data.
 #' \code{tidytime} supports major time series formats including:
-#' \itemize{
 #'  \item builtin time.series (ts)
 #'  \item zoo
 #'  \item xts
-#'  }
 #'
 #' @docType package
 #' @name tidytime
@@ -58,7 +56,7 @@ tidytime.default <- function(x, ...) {
 
 #' Tidier for zoo object
 #'
-#' identical to \code{broom::tidy.zoo} except this returns a \code{tbl_df}
+#' identical to \code{broom::tidy.zoo} except this tidier returns a \code{tbl_df}
 #'
 #' @param x time series object to tidy
 #' @param ... extra arguments
@@ -66,11 +64,10 @@ tidytime.default <- function(x, ...) {
 #' @return tbl_df
 #'
 #' @examples
-#' if (require(zoo)) {
-#'   x.Date <- as.Date("2003-02-01") + c(1, 3, 7, 9, 14) - 1
-#'   x <- zoo(rnorm(5), x.Date)
+#'   x <- zoo::zoo(rnorm(5),
+#'                 as.Date("2003-02-01") +
+#'                  c(1, 3, 7, 9, 14) - 1)
 #'   tidytime(x)
-#' }
 #'
 #' @export
 tidytime.zoo <- function(x, ...) {
@@ -93,9 +90,11 @@ tidytime.zoo <- function(x, ...) {
 #'
 #' @export
 tidytime.ts <- function(x, ...) {
+
   ret <- data.frame(data.frame(x), index = zoo::index(x))
   ret <- tidyr::gather(ret, series, value, -index)
   ret <- dplyr::tbl_df(ret)
+
   ret
 }
 
